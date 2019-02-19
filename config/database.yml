@@ -17,6 +17,6 @@ test:
   database: <%= ENV["DATABASE_NAME_TEST"] %>
 
 
-staging:
+production:
   <<: *default
-  database: <%= ENV["DATABASE_NAME_STAGE"] %>
+  database: <%= ENV["DATABASE_NAME_PROD"] %>
