@@ -7,7 +7,7 @@ services:
     environment: 
       POSTGRES_PASSWORD: <%= ENV["DATABASE_ADMIN_PASSWORD"] %>
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - /var/lib/postgresql/data
     restart: unless-stopped
   web:
     build: .
