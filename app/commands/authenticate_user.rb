@@ -9,7 +9,7 @@ class AuthenticateUser
     def call
         token = JsonWebToken.encode(user_id: user.id) if user
         
-        return {token: token, user: user.attributes.except("password_digest")}
+        return {token: token, user: user.attributes.except("password_digest")} unless user == nil
     end
   
     private
@@ -18,6 +18,7 @@ class AuthenticateUser
     
         def user
             user = User.find_by_email(email)
+            return nil if user.blank?
             return user if user && user.authenticate(password)
         
             errors.add :user_authentication, {message: "Invalid credentials", code: "invalid"}

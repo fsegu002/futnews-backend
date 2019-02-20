@@ -28,3 +28,4 @@ play_types = [
     }
 ]
 PlayType.create(play_types)
+User.create(email: 'jsmith@abc.com', password: ENV["FIRST_USER_PASSWORD"], password_confirmation: ENV["FIRST_USER_PASSWORD"])
