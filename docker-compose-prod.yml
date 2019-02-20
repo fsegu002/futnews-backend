@@ -8,13 +8,14 @@ services:
       POSTGRES_PASSWORD: <%= ENV["DATABASE_ADMIN_PASSWORD"] %>
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
+    restart: unless-stopped
   web:
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && RAILS_ENV=production bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/futnews-api
-    restart: unless-stopped
     ports:
       - "3030:3000"
     depends_on:
       - db
+    restart: unless-stopped
