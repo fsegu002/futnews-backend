@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Build dev image
+```
+    docker-compose up --build
+``` 
 
-Things you may want to cover:
+## Build prod image
+```
+    docker-compose -f docker-compose-prod.yml up --build
+``` 
 
-* Ruby version
+## Run scripts on Rails container
+```
+    docker-compose run web rails db:migrate 
+    docker-compose -f docker-compose-prod.yml run web rails db:migrate
+```
 
-* System dependencies
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Create ssh tunnel
+```
+    ssh user@ip-address -L <localport>:localhost:<serverport> -C
+``` 
