@@ -3,9 +3,11 @@ services:
   db:
     image: postgres:10
     ports: 
-      - '2345:5432'
+      - '4545:5432'
     environment: 
-      POSTGRES_PASSWORD: <%= ENV["DATABASE_ADMIN_PASSWORD"] %>
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=<%= ENV["DATABASE_ADMIN_PASSWORD"] %>
     volumes:
       - /var/lib/postgresql/data
     restart: unless-stopped

@@ -12,8 +12,8 @@
 
 ## Run scripts on Rails container
 ```
-    docker-compose run web rails db:migrate 
-    docker-compose -f docker-compose-prod.yml run web rails db:migrate
+    docker-compose run --rm web rails db:migrate 
+    docker-compose -f docker-compose-prod.yml run --rm web rails db:migrate
 ```
 
 
