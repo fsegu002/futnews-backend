@@ -9,7 +9,7 @@ default: &default
 
 development:
   <<: *default
-  database: futnews-api_development
+  database: <%= ENV["DATABASE_NAME_DEV"] %>
 
 
 test:
