@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'play_types/delete'
   namespace :api do
     namespace :v1 do
+      post '/users/create' 
       post '/posts', to: 'posts#create'
 
       post '/authenticate', to: 'authentication#authenticate'
