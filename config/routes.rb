@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       post '/users/create' 
+      post '/users/:id/confirm_user', to: 'users#confirm_user'
+
       post '/posts', to: 'posts#create'
 
       post '/authenticate', to: 'authentication#authenticate'

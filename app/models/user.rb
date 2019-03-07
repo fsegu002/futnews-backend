@@ -7,4 +7,9 @@ class User < ApplicationRecord
     def password_match?
        self.password == self.password_confirmation
     end
+
+    def is_confirmed?
+        self.confirmed
+    end
+
 end
