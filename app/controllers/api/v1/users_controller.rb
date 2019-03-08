@@ -8,7 +8,7 @@ module Api
         @user = User.new(user_params)
         if @user.save && @user.password_match?
           UserMailer.signup_confirmation(@user).deliver
-          render json: @user, status: :created
+          render json: @user.attributes.except("password_digest"), status: :created
         else
           render json: {message: @user.errors}, status: :internal_server_error
         end
