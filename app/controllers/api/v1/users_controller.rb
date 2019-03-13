@@ -6,11 +6,16 @@ module Api
 
       def create
         @user = User.new(user_params)
-        if @user.save && @user.password_match?
-          UserMailer.signup_confirmation(@user).deliver
-          render json: @user.attributes.except("password_digest"), status: :created
+
+        if @user.password_match? 
+          if @user.save
+            UserMailer.signup_confirmation(@user).deliver
+            render json: @user.attributes.except("password_digest"), status: :created
+          else
+            render json: {message: @user.errors}, status: :bad_request
+          end
         else
-          render json: {message: @user.errors}, status: :internal_server_error
+          render json: {message: "Passwords don't match"}, status: :bad_request
         end
       end
 
@@ -19,7 +24,7 @@ module Api
         if @user.update(confirmed: true)
           render json: {message: "#{@user.email} has been confirmed."}, status: :ok
         else
-          render json: {message: @user.errors}, status: :internal_server_error
+          render json: {message: @user.errors}, status: :bad_request
         end
       end
 
