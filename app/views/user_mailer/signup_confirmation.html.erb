@@ -10,7 +10,7 @@
       You have successfully created an account.
     </p>
     <p>
-      To validate your account, you can click the following link: <%= link_to "activate account", "#{FRONTEND_DOMAIN}/confirm-new-user/#{@user.id}" %>
+      To validate your account, you can click the following link: <%= link_to "activate account", "#{ENV["FRONTEND_DOMAIN"]}/confirm-new-user/#{@user.id}" %>
     </p>
     <p>Thanks for joining!</p>
   </body>
