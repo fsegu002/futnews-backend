@@ -10,7 +10,18 @@ module Api
         if @user.password_match? 
           if @user.save
             UserMailer.signup_confirmation(@user).deliver
-            render json: @user.attributes.except("password_digest"), status: :created
+            # render json: @user.attributes.except("password_digest"), status: :created
+            command = AuthenticateUser.call(user_params)
+
+            if command.success?
+                if command.result.present?
+                    render json: command.result
+                else
+                    render json: { message: 'User email was not found' }, status: :unauthorized
+                end
+            else
+                render json: { error: command.errors }, status: :unauthorized
+            end
           else
             render json: {message: @user.errors}, status: :bad_request
           end
