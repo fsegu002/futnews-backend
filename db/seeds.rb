@@ -6,6 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.create(email: 'jsmith@abc.com', password: ENV["FIRST_USER_PASSWORD"], password_confirmation: ENV["FIRST_USER_PASSWORD"])
+
 play_types = [
     {
         code: 'goal', name: 'Goal'
@@ -28,4 +30,14 @@ play_types = [
     }
 ]
 PlayType.create(play_types)
-User.create(email: 'jsmith@abc.com', password: ENV["FIRST_USER_PASSWORD"], password_confirmation: ENV["FIRST_USER_PASSWORD"])
+
+season_pl = {
+    external_id: 2021,
+    title: 'Premier League',
+    code: 'PL',
+    country: 'England',
+    active: true,
+    season_start_date: "2018-08-10",
+    season_end_date: "2019-05-12"
+}
+League.create(season_pl)

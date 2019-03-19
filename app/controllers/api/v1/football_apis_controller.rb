@@ -1,6 +1,8 @@
 module Api
     module V1
         class V1::FootballApisController < ApplicationController
+            before_action :set_league, only: [:fetch_and_save_matches, :fetch_and_update_matches]
+
             def fetch_and_save_teams 
                 results = football_api
                 allTeams = JSON.parse(results.get_teams)
@@ -85,10 +87,16 @@ module Api
                         home_team: match_info["homeTeam"]["id"],
                         away_team: match_info["awayTeam"]["id"],
                         status: match_info["status"],
-                        info: match_info
+                        info: match_info,
+                        league_id: @league[:id].to_i
                     }
                 end
 
+                def set_league
+                    # Premier League
+                    league_selection = League.all.where(code: "PL").limit(1)
+                    @league = league_selection[0]
+                end
         end
     end
 end
