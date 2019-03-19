@@ -14,9 +14,11 @@ module Api
                                         "tb.id as team_id", 
                                         "tb.short_name as away", 
                                         "ta.crest_url as home_logo", 
-                                        "tb.crest_url as away_logo")
+                                        "tb.crest_url as away_logo",
+                                        "l.title as league_title")
                                 .joins("LEFT JOIN teams as ta ON ta.team_id = home_team")
                                 .joins("LEFT JOIN teams as tb ON tb.team_id = away_team")
+                                .joins("LEFT JOIN leagues as l ON l.id = league_id")
                                 .where(utc_date: selected_date.beginning_of_day..selected_date.end_of_day)
                                 .order(:utc_date)
                 results = []
@@ -33,9 +35,11 @@ module Api
                                         "tb.id as away_team_id", 
                                         "tb.short_name as away", 
                                         "ta.crest_url as home_logo", 
-                                        "tb.crest_url as away_logo")
+                                        "tb.crest_url as away_logo",
+                                        "l.title as league_title")
                                     .joins("LEFT JOIN teams as ta ON ta.team_id = home_team")
                                     .joins("LEFT JOIN teams as tb ON tb.team_id = away_team")
+                                    .joins("LEFT JOIN leagues as l ON l.id = league_id")
                                     .where(id: params[:id])
                                     .limit(1)
                                     
@@ -56,9 +60,17 @@ module Api
             end
 
             def showMatchOnly
-                match = Match.select(:id, :utc_date, :info, "ta.id as home_team_id", "ta.short_name as home", "tb.id as away_team_id", "tb.short_name as away", "ta.crest_url as home_logo", "tb.crest_url as away_logo")
+                match = Match.select(:id, :utc_date, :info, 
+                                "ta.id as home_team_id", 
+                                "ta.short_name as home", 
+                                "tb.id as away_team_id", 
+                                "tb.short_name as away", 
+                                "ta.crest_url as home_logo", 
+                                "tb.crest_url as away_logo",
+                                "l.title as league_title")
                                 .joins("LEFT JOIN teams as ta ON ta.team_id = home_team")
                                 .joins("LEFT JOIN teams as tb ON tb.team_id = away_team")
+                                .joins("LEFT JOIN leagues as l ON l.id = league_id")
                                 .where(id: params[:id])
                                 .limit(1)
 
@@ -73,6 +85,7 @@ module Api
                         utc_date: match["utc_date"],
                         info: match["info"],
                         post_count: post_count,
+                        league_title: match["league_title"],
                         teams: [{
                             id: match["home_team_id"],
                             team_type: 'home-team',
