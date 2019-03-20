@@ -43,15 +43,13 @@ module Api
                                     .where(id: params[:id])
                                     .limit(1)
                                     
-                posts = Post.select(:id, :minute, 
+                posts = Post.select(:id, :minute, :team_id, 
                                     "pt.name as play_type_name", 
                                     "pt.code as play_type_code", 
                                     "p.name as player_name", 
-                                    "p.shirt_number as player_number",
-                                    "t.short_name as team_name")
+                                    "p.shirt_number as player_number")
                             .joins("LEFT JOIN play_types as pt ON pt.id = play_type_id")
                             .joins("LEFT JOIN players as p ON p.id = player_id")
-                            .joins("LEFT JOIN teams as t ON t.id = posts.team_id")
                             .where(match_id: params[:id]).order(minute: :desc)
 
                 response = {
