@@ -47,9 +47,11 @@ module Api
                                     "pt.name as play_type_name", 
                                     "pt.code as play_type_code", 
                                     "p.name as player_name", 
-                                    "p.shirt_number as player_number")
+                                    "p.shirt_number as player_number",
+                                    "t.short_name as team_name")
                             .joins("LEFT JOIN play_types as pt ON pt.id = play_type_id")
                             .joins("LEFT JOIN players as p ON p.id = player_id")
+                            .joins("LEFT JOIN teams as t ON t.id = posts.team_id")
                             .where(match_id: params[:id]).order(minute: :desc)
 
                 response = {
