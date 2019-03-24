@@ -17,6 +17,7 @@ module Api
                     if @like.save
                         post = {
                             id: @post.id,
+                            number_of_likes: @post.likes.length,
                             user_likes_post: Like.user_liked_post(@post.id, @current_user.id)
                         }
                         render json: {post: post}, status: :created
@@ -29,6 +30,7 @@ module Api
                     
                     post = {
                         id: @post.id,
+                        number_of_likes: @post.likes.length,
                         user_likes_post: Like.user_liked_post(@post.id, @current_user.id)
                     }
                     render json: {post: post}, status: :ok
