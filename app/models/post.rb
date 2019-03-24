@@ -17,7 +17,7 @@ class Post < ApplicationRecord
       player_name: p.player_name,
       player_number: p.player_number,
       team_id: p.team_id,
-      number_of_likes: p.likes.length # count of likes
+      number_of_likes: p.likes.length
     }
   end
 end
