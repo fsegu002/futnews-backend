@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       post '/users/:id/confirm_user', to: 'users#confirm_user'
 
       post '/posts', to: 'posts#create'
+      post '/posts/:id/like', to: 'posts#like'
 
       post '/authenticate', to: 'authentication#authenticate'
 

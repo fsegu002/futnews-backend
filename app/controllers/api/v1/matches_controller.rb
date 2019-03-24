@@ -51,10 +51,17 @@ module Api
                             .joins("LEFT JOIN play_types as pt ON pt.id = play_type_id")
                             .joins("LEFT JOIN players as p ON p.id = player_id")
                             .where(match_id: params[:id]).order(minute: :desc)
+                
+                postsArr = []
+                posts.map do |p| 
+                    post = Post.build_post_with_likes(p)
+                    post["user_likes_post"] = Like.user_liked_post(p.id, @current_user.id)
+                    postsArr << post
+                end
 
                 response = {
                     match: build_match_info(match[0], posts.length),
-                    posts: posts
+                    posts: postsArr
                 }
                 render json: response, status: :ok
             end

@@ -1,7 +1,7 @@
 module Api
     module V1
         class V1::PostsController < ApplicationController    
-            before_action :set_post, only: [:show, :update, :destroy]        
+            before_action :set_post, only: [:show, :like, :update, :destroy]        
             def index
                 posts = Post.all
                 render json: posts
@@ -9,6 +9,23 @@ module Api
             
             def show
                 render json: @posts
+            end
+
+            def like
+                if(!Like.user_liked_post(@post.id, @current_user.id))
+                    @like = Like.new(post_id: @post.id, user_id: @current_user.id) 
+                    if @like.save
+                        render json: {user_likes_post: true}, status: :created
+                    else
+                        render json: {messages: 'Error creating like', status: :unprocessable_entry}
+                    end
+                else 
+                    puts "====== false"
+                    @like = Like.where(post_id: @post.id).where(user_id: @current_user.id).limit(1)
+                    puts "#{@like[0].id}"
+                    @like[0].destroy
+                    render json: {user_likes_post: false}, status: :ok
+                end
             end
             
             def create
